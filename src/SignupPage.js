@@ -58,7 +58,7 @@ export default function SignupPage() {
             email: registerEmail,
             userID: user.user.uid,
           });
-          
+
         } catch (error) {
           if (error.code === "auth/email-already-in-use") {
             setError("Email is already in use");
@@ -117,8 +117,8 @@ export default function SignupPage() {
       return (
         <div style={container}>
           <div style={formContainer}>
-          <h1>Fitness Tracker App</h1>
-            <h3 style={{ marginBottom: "20px", color: "#333" }}>Register User</h3>
+          <h1>FitnessPal</h1>
+            <h3 style={{ marginBottom: "20px", color: "#333" }}>Create an account</h3>
             <input
               placeholder="First Name..."
               style={inputStyles}
