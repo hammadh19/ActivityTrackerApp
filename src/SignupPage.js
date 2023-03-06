@@ -117,7 +117,6 @@ export default function SignupPage() {
       return (
         <div style={container}>
           <div style={formContainer}>
-          <h1>FitnessPal</h1>
             <h3 style={{ marginBottom: "20px", color: "#333" }}>Create an account</h3>
             <input
               placeholder="First Name..."

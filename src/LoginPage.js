@@ -85,7 +85,6 @@ export default function LoginPage() {
     return(
         <div className="Login Page" style={container}>
             <div style={form}>
-            <h1>FitnessPal</h1>
                 <h3 style={{ marginBottom: "20px", color: "#333" }}> Login </h3>
                 <input
                     placeholder="Email..."
