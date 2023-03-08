@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import validator from 'validator';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase-config";
@@ -9,6 +9,7 @@ export default function LoginPage() {
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const loginValidation = () => {
       if(loginEmail == "" || loginPassword == ""){
@@ -32,8 +33,13 @@ export default function LoginPage() {
             loginPassword
           );
           console.log("Sucessfully Logged in");
+          navigate("/profile");
         } catch (error) {
-          console.log(error.message);
+          if(error.code === "auth/user-not-found"){
+            setError("No account exists")
+          } else{
+            setError("Please try again")
+          }
         }
       };
 

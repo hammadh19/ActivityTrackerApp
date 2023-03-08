@@ -1,6 +1,6 @@
 import { useState } from "react";
 import validator from 'validator';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import background from "./wallpaper.jpeg";
 import {
   createUserWithEmailAndPassword,
@@ -19,6 +19,7 @@ export default function SignupPage() {
     const [registerConfirmPassword, setRegisterConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const usersCollectionRef = collection(db, 'Users');
+    const navigate = useNavigate();
 
     const registerValidation = () => {
       if(registerEmail == "" || registerPassword == "" || registerConfirmPassword == "" || registerFirstName == "" || registerLastName == ""){
@@ -57,12 +58,12 @@ export default function SignupPage() {
             lastName: registerLastName,
             email: registerEmail,
             userID: user.user.uid,
-          });
-
+          }); 
+          navigate("/profile");
         } catch (error) {
           if (error.code === "auth/email-already-in-use") {
             setError("Email is already in use");
-          } else {
+          }else {
             setError("An error occurred while registering. Please try again later.");
           }
           console.log(error.message);
