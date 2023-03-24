@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import validator from 'validator';
-import { getAuth, signOut } from "firebase/auth";
-import {collection, doc, getDoc, updateDoc} from "firebase/firestore"
+import { useNavigate } from "react-router-dom";
+import { doc, getDoc, updateDoc} from "firebase/firestore"
 import { auth, db} from "./firebase-config";
 import background from "./wallpaper.jpeg";
 
 export default function ProfilePage() {
     const userID = auth.currentUser.uid;
-    const navigate = useNavigate();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [weight, setWeight] = useState(0);
@@ -44,18 +41,6 @@ export default function ProfilePage() {
         res()
     }
 
-    const SignOut = async () => {
-        try{
-            await signOut(auth)
-            console.log("Sucessfully signed out");
-            navigate("/login");
-        }
-        catch(error){
-            console.log(error);
-        }
-        
-    };
-    
     const container = {
     display: "flex",
     justifyContent: "center",
@@ -105,14 +90,25 @@ export default function ProfilePage() {
         <div className="Profile Page" style={container}>
             <div style={form}>
                 <h3 style={{ marginBottom: "20px", color: "#333" }}> Profile </h3>
+                
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                <p style={{ marginRight: "10px" }}>First name</p>
                 <input
                     placeholder={firstName}
                     style={input}
                 />
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                <p style={{ marginRight: "10px" }}>Last name</p>
                 <input
                     placeholder={lastName}
                     style={input}
                 />
+                </div>
+               
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                <p style={{ marginRight: "10px" }}>Weight</p>
                 <input
                     placeholder="Enter Weight..."
                     value={weight}
@@ -121,6 +117,10 @@ export default function ProfilePage() {
                         setWeight(event.target.value);
                     }}
                 />
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                <p style={{ marginRight: "10px" }}>Height</p>
                 <input
                     placeholder="Enter Height..."
                     value={height}
@@ -129,6 +129,10 @@ export default function ProfilePage() {
                         setHeight(event.target.value);
                     }}
                 />
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                <p style={{ marginRight: "10px" }}>Age</p>
                 <input
                     placeholder="Enter Age..."
                     value={age}
@@ -137,8 +141,9 @@ export default function ProfilePage() {
                         setAge(event.target.value);
                     }}
                 />
+                </div>
+                
                 <button onClick={updateDetails} style={button}> Update </button>
-                <button onClick={SignOut} style={button}> Logout </button>
             </div>
         </div>
 
