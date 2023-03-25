@@ -1,8 +1,8 @@
 import './App.css';
-import LoginPage from './LoginPage';
-import SignupPage from './SignupPage';
-import ProfilePage from './ProfilePage';
-import CalculatorPage from './Calculator';
+import LoginPage from './Pages/LoginPage';
+import SignupPage from './Pages/SignupPage';
+import ProfilePage from './Pages/ProfilePage';
+import CalculatorPage from './Pages/CalculatorPage';
 import { BrowserRouter, Route, Routes, NavLink } from "react-router-dom";
 import { Navigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
@@ -11,7 +11,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useState, useEffect } from 'react';
-import SignOutButton from './SignOutButton';
+import SignOutButton from './Components/SignOutButton';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
