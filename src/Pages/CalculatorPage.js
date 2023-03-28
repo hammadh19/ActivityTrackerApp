@@ -50,7 +50,6 @@ export default function CalculatorPage() {
             if(timeUnit === "hours"){
                 let mins = time * 60;
                 console.log(mins)
-                // const calories = await Calculator(activity, mins)
                 setResult(await Calculator(activity, mins));
             } else{
                 setResult(await Calculator(activity, time));
@@ -82,17 +81,11 @@ export default function CalculatorPage() {
                 className='input'
                 >
                 <option value="">Select Activity</option>
-                <option value="running">Running</option>
-                <option value="swimming">Swimming</option>
-                <option value="cycling">Cycling</option>
-                <option value="cycling">Cycling</option>
-                <option value="cycling">Cycling</option>
-                <option value="cycling">Cycling</option>
-                <option value="cycling">Cycling</option>
-                <option value="cycling">Cycling</option>
-                <option value="cycling">Cycling</option>
-                <option value="cycling">Cycling</option>
-
+                <option value="Running">Running</option>
+                <option value="Swimming">Swimming</option>
+                <option value="Cycling">Cycling</option>
+                <option value="Jogging">Jogging</option>
+                
                 </select>
 
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
