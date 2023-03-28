@@ -13,21 +13,22 @@ export default function ProfilePage() {
     const [age, setAge] = useState(0);
     
     useEffect(() => {
-        async function getData() {
-            const docRef = doc(db, "Users", userID);            
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-              setFirstName(docSnap.data().firstName);
-              setLastName(docSnap.data().lastName);
-              setWeight(docSnap.data().weight);
-              setHeight(docSnap.data().height);
-              setAge(docSnap.data().age);
-            } else {
-              console.log("No such document!");
-            }
-          }
         getData();
     }, []);
+
+    async function getData() {
+        const docRef = doc(db, "Users", userID);            
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setFirstName(docSnap.data().firstName);
+          setLastName(docSnap.data().lastName);
+          setWeight(docSnap.data().weight);
+          setHeight(docSnap.data().height);
+          setAge(docSnap.data().age);
+        } else {
+          console.log("No such document!");
+        }
+    }
 
     const updateDetails = () => {
         async function res() {
