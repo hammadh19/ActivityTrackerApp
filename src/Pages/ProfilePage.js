@@ -8,9 +8,10 @@ export default function ProfilePage() {
     const userID = auth.currentUser.uid;
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [weight, setWeight] = useState(0);
-    const [height, setHeight] = useState(0);
-    const [age, setAge] = useState(0);
+    const [weight, setWeight] = useState("");
+    const [height, setHeight] = useState("");
+    const [age, setAge] = useState("");
+    const [error, setError] = useState("");
     
     useEffect(() => {
         getData();
@@ -30,9 +31,24 @@ export default function ProfilePage() {
         }
     }
 
+    const validation = () => {
+        if(firstName === "" || lastName === ""){
+            setError("Please enter first/last name")
+        }
+        if(weight === "" || height === "" || age === ""){
+            setError("Please enter weight/height/age")
+        }
+        else{
+            setError("")
+            updateDetails();
+        }
+    }
+
     const updateDetails = () => {
         async function res() {
         await updateDoc(doc(db, "Users", userID), {
+            firstName: firstName,
+            lastName: lastName,
             weight: weight,
             height: height,
             age: age
@@ -50,16 +66,24 @@ export default function ProfilePage() {
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                 <p style={{ marginRight: "10px" }}>First name</p>
                 <input
-                    placeholder={firstName}
+                    placeholder="Enter First Name..."
+                    defaultValue={firstName}
                     className='input'
+                    onChange={(event) => {
+                        setFirstName(event.target.value);
+                    }}
                 />
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                 <p style={{ marginRight: "10px" }}>Last name</p>
                 <input
-                    placeholder={lastName}
+                    placeholder="Enter Last Name..."
+                    defaultValue={lastName}
                     className='input'
+                    onChange={(event) => {
+                        setLastName(event.target.value);
+                    }}
                 />
                 </div>
                
@@ -99,7 +123,8 @@ export default function ProfilePage() {
                 />
                 </div>
                 
-                <button onClick={updateDetails} className='button'> Update </button>
+                <button onClick={validation} className='button'> Update </button>
+                <p style={{ color: "red", marginTop: "10px" }}>{error}</p>
             </div>
         </div>
 

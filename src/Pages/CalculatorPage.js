@@ -11,6 +11,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
 import Calculator from '../Components/Calculator';
+import addActivity from '../FirebaseCalls/SetActivity';
 
 export default function CalculatorPage() {
     const userID = auth.currentUser.uid;
@@ -21,7 +22,7 @@ export default function CalculatorPage() {
     const [distance, setDistance] = useState("");
     const [result, setResult] = useState(0)
     const [showResult, setShowResult] = useState(false); // state variable to show/hide result
-    const [value, setValue] = React.useState(null);
+    const [value, setValue] = useState("")
     const [error, setError] = useState("");
     const [dateTimeError, setDateTimeError] = useState("");
 
@@ -49,6 +50,7 @@ export default function CalculatorPage() {
             console.log(distance, distanceUnit);
             if(timeUnit === "hours"){
                 let mins = time * 60;
+                setTime(mins);
                 console.log(mins)
                 setResult(await Calculator(activity, mins));
             } else{
@@ -59,11 +61,12 @@ export default function CalculatorPage() {
     }
 
     const displayDateTime = () => {
-        if(value === null){
+        if(value === ""){
             setDateTimeError("Please enter a date and time")
         }else{
             setDateTimeError("");
-            console.log(value.$d)
+            console.log(time)
+            addActivity(activity, result, value, time, distance, distanceUnit)
         }
     }
     
@@ -127,9 +130,9 @@ export default function CalculatorPage() {
                     className='input'
                     >
                     <option value="">Select Unit</option>
-                    <option value="metres">Metres</option>
-                    <option value="kilometres">Kilometres</option>
-                    <option value="miles">Miles</option>
+                    <option value="Metres">Metres</option>
+                    <option value="Kilometres">Kilometres</option>
+                    <option value="Miles">Miles</option>
                     </select>
                 </div>
                 <p style={{ color: "red" }}>{error}</p>

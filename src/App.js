@@ -3,6 +3,7 @@ import LoginPage from './Pages/LoginPage';
 import SignupPage from './Pages/SignupPage';
 import ProfilePage from './Pages/ProfilePage';
 import CalculatorPage from './Pages/CalculatorPage';
+import ActivitiesPage from './Pages/ActivitiesPage';
 import { BrowserRouter, Route, Routes, NavLink } from "react-router-dom";
 import { Navigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
@@ -58,6 +59,11 @@ function App() {
                   <Nav.Link as={NavLink} to="/calculator" activeclassname="active">Calculator</Nav.Link>
                 </Nav.Item>
               ) : null}
+              {loggedIn ? (
+                <Nav.Item>
+                  <Nav.Link as={NavLink} to="/activities" activeclassname="active">Activities</Nav.Link>
+                </Nav.Item>
+              ) : null}
 
               {loggedIn ? (
                 <Nav.Item>
@@ -75,6 +81,7 @@ function App() {
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path='/profile' element={<ProfilePage/>} />
       <Route path='/calculator' element={<CalculatorPage/>} />
+      <Route path='/activities' element={<ActivitiesPage/>} />
       </Routes>
       
     </BrowserRouter>
