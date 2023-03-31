@@ -14,7 +14,6 @@ import Calculator from '../Components/Calculator';
 import addActivity from '../FirebaseCalls/SetActivity';
 
 export default function CalculatorPage() {
-    const userID = auth.currentUser.uid;
     const [activity, setActivity] = useState("");
     const [timeUnit, setTimeUnit] = useState("");
     const [time, setTime] = useState(0);
@@ -25,6 +24,7 @@ export default function CalculatorPage() {
     const [value, setValue] = useState("")
     const [error, setError] = useState("");
     const [dateTimeError, setDateTimeError] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
 
     async function validation () {
         if(activity === ""){
@@ -67,6 +67,7 @@ export default function CalculatorPage() {
             setDateTimeError("");
             console.log(time)
             addActivity(activity, result, value, time, distance, distanceUnit)
+            setSuccessMessage("Successfully added activity")
         }
     }
     
@@ -151,6 +152,10 @@ export default function CalculatorPage() {
 
                 {showResult ? (
                         <button onClick={displayDateTime} className='button'> Add to Activity Log </button>
+                    ) : null}
+
+                {showResult ? (
+                    <p style={{ color: "green" }}>{successMessage}</p>
                     ) : null}
             </div>
         </div>

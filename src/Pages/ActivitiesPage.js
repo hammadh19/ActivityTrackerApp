@@ -2,45 +2,47 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { auth, db} from "../firebase-config";
+import LineChart from "../Components/LineChart";
+import { getAllActivities } from "../FirebaseCalls/GetActivities";
+import { getCalories } from "../FirebaseCalls/GetCalories";
+import { UserData } from "../Components/Data";
 import background from "../wallpaper.jpeg";
 
 export default function ActivitiesPage() {
-    const userID = auth.currentUser.uid;
     const [activityList, setActivityList] = useState([])
-    const [activity, setActivity] = useState("");
-    const [calories, setCalories] = useState("");
-    const [dateTime, setDateTime] = useState("");
-    const [distance, setDistance] = useState("");
-    const [distanceUnit, setDistanceUnit] = useState("");
-    const [time, setTime] = useState("");
+    const [userData, setUserData] = useState({
+        labels: UserData.map((data) => data.day),
+        datasets: [
+          {
+            label: "Calories Burned",
+            data: UserData.map((data) => data.userGain),
+            borderColor: "black",
+            borderWidth: 2,
+          },
+        ],
+      });
     
     useEffect(() => {
         getActivities();
     }, []);
 
     async function getActivities() {
-        const q = query(collection(db, "Activities"), where("userID", "==", userID))
-        const querySnapshot = await getDocs(q);
-        const activities = [];
-        querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
-            
-            activities.push(doc.data())
-        });
-        setActivityList(activities)
+        const result = await getAllActivities();
+        setActivityList(result);
     }
 
     return(
         <div className='pageContainer'>
 
         <div className='formContainer'>
-            <div className='form'>
-            <h3 className='formTitle'> Graph </h3>
+            <div className='formActivity'>
+            <h5 className='formTitle'> Average calories burned this week </h5>
+            <LineChart chartData={userData} />
             
             </div>
 
-            <div className='form'>
-            <h3 className='formTitle'> Activities </h3>
+            <div className='formActivity'>
+            {/* <h3 className='formTitle'> Activities </h3> */}
             <div>
                 {activityList.map((data, index) => {
                 return (
@@ -55,12 +57,12 @@ export default function ActivitiesPage() {
         </div>
 
         <div className='formContainer'>
-            <div className='form'>
+            <div className='formActivity'>
             <h3 className='formTitle'> Stats </h3>
             
             </div>
 
-            <div className='form'>
+            <div className='formActivity'>
             <h3 className='formTitle'> Pie Chart </h3>
             
             </div>
