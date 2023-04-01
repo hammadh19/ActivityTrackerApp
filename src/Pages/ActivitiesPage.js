@@ -1,59 +1,69 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { auth, db} from "../firebase-config";
 import LineChart from "../Components/LineChart";
 import { getAllActivities } from "../FirebaseCalls/GetActivities";
 import { getCalories } from "../FirebaseCalls/GetCalories";
-import { UserData } from "../Components/Data";
-import background from "../wallpaper.jpeg";
+import getWeeklyData from "../Components/WeeklyData";
+import { auth } from "../firebase-config";
+import { useNavigate } from "react-router-dom";
+import running_icon from '../running_icon.png'
 
 export default function ActivitiesPage() {
-    const [activityList, setActivityList] = useState([])
-    const [userData, setUserData] = useState({
-        labels: UserData.map((data) => data.day),
-        datasets: [
-          {
-            label: "Calories Burned",
-            data: UserData.map((data) => data.userGain),
-            borderColor: "black",
-            borderWidth: 2,
-          },
-        ],
-      });
+    const [userID, setUserID] = useState("");
+    const [activityList, setActivityList] = useState([]);
+    const [weeklyData, setWeeklyData] = useState([]);
+    const [Data, setData] = useState({});
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const unsub = auth.onAuthStateChanged((authObj) => {
+          unsub();
+          if (authObj) {
+            setUserID(auth.currentUser.uid)
+          } else {
+            navigate('/login');
+          }
+        });
+      }, []);
     
     useEffect(() => {
         getActivities();
-    }, []);
+    }, [userID]);
 
     async function getActivities() {
-        const result = await getAllActivities();
-        setActivityList(result);
+        const activities = await getAllActivities(userID);
+        setActivityList(activities);
+        const result = await getCalories();
+        setWeeklyData(result);
+        const data = getWeeklyData(result)
+        setData(data);
     }
 
     return(
         <div className='pageContainer'>
-
+        
         <div className='formContainer'>
             <div className='formActivity'>
-            <h5 className='formTitle'> Average calories burned this week </h5>
-            <LineChart chartData={userData} />
-            
+            <h5 className='formTitle'> Calories burnt this week </h5>
+            {Object.keys(Data).length !== 0 && <LineChart chartData={Data} />}
             </div>
 
             <div className='formActivity'>
-            {/* <h3 className='formTitle'> Activities </h3> */}
-            <div>
-                {activityList.map((data, index) => {
+            {activityList.map((data, index) => {
                 return (
-                    <div key={index} className='activity'>
-                    <p>Activity: {data.Activity} Date: {data.DateTime.toDate().toDateString()} </p>
-                    <p>Time: {data.DateTime.toDate().toLocaleTimeString('en-US')} Calories Burned: {data.CaloriesBurnt}</p>
+                <div key={index} className='activity'>
+                    <div className='activity-image'>
+                        <img src={running_icon} height={50} width={50} />
                     </div>
-                );
-                })}
-            </div>
-            </div>
+                    <div className='activity-details'>
+                        <p>Activity: {data.Activity}</p>
+                        <p>Date: {data.DateTime.toDate().toDateString()}</p>
+                        <p>Time: {data.DateTime.toDate().toLocaleTimeString('en-US')}</p>
+                        <p>Calories Burned: {data.CaloriesBurnt} kcal</p>
+                    </div>
+                </div>
+        );
+    })}
+</div>
         </div>
 
         <div className='formContainer'>

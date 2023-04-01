@@ -4,7 +4,6 @@ import {Chart} from "chart.js/auto"
 import { height } from "@mui/system";
 
 export default function LineChart({chartData}){
-
     return (
         <Line data={chartData} 
             
