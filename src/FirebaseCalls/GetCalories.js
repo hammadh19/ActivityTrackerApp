@@ -1,8 +1,7 @@
 import { collection, query, where, getDocs, Timestamp } from "firebase/firestore";
 import { auth, db} from "../firebase-config";
 
-async function getCalories() {
-    const userID = auth.currentUser.uid;
+async function getCaloriesThisWeek(userID) {
     const currentDate = new Date();
     const currentDay = currentDate.getDay(); // Sunday = 0, Monday = 1, etc.
 
@@ -33,4 +32,4 @@ async function getCalories() {
     return weeklyData;
 }
 
-export { getCalories }
+export { getCaloriesThisWeek }

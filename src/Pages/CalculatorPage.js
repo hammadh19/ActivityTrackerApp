@@ -1,10 +1,6 @@
 import * as React from 'react';
 import "../StyleSheets/Pages.css"
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { doc, getDoc, updateDoc} from "firebase/firestore"
-import { auth, db} from "../firebase-config";
-import background from "../wallpaper.jpeg";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';

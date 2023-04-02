@@ -4,7 +4,7 @@
   align-items: center;
   min-height: 100vh;
   font-family: Arial;
-  background-image: url("../background.png");
+  background-image: url("../Images/background.png");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -63,17 +63,12 @@
   text-align: "center";
 }
 
-.activity-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.activity {
+/* .activity {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
   width: 100%;
-  background-color: lightgrey;
+  background-color: #92d4d2;
   border-radius: 5px;
 }
 
@@ -89,4 +84,41 @@
 
 .activity-details {
   flex: 1;
+} */
+
+/* .formActivity {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+} */
+
+.activity {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #f7f7f7;
+}
+
+.activity-image {
+  margin-right: 20px;
+}
+
+.activity-image img {
+  border-radius: 20%;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.activity-details {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.activity-details p {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 5px;
 }
