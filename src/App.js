@@ -1,6 +1,9 @@
 import './App.css';
 import LoginPage from './Pages/LoginPage';
 import SignupPage from './Pages/SignupPage';
+import SignupPage2 from './Pages/SignupPage2';
+import AboutPage from './Pages/AboutPage';
+import HowToUsePage from './Pages/HowToUsePage';
 import ProfilePage from './Pages/ProfilePage';
 import CalculatorPage from './Pages/CalculatorPage';
 import ActivitiesPage from './Pages/ActivitiesPage';
@@ -49,6 +52,11 @@ function App() {
                   <Nav.Link as={NavLink} to="/signup" activeclassname="active">Signup</Nav.Link>
                 </Nav.Item>
               ) : null}
+              {!loggedIn ? (
+                <Nav.Item>
+                  <Nav.Link as={NavLink} to="/about" activeclassname="active">About Us</Nav.Link>
+                </Nav.Item>
+              ) : null}
               {loggedIn ? (
                 <Nav.Item>
                   <Nav.Link as={NavLink} to="/profile" activeclassname="active">Profile</Nav.Link>
@@ -62,6 +70,11 @@ function App() {
               {loggedIn ? (
                 <Nav.Item>
                   <Nav.Link as={NavLink} to="/activities" activeclassname="active">Activities</Nav.Link>
+                </Nav.Item>
+              ) : null}
+              {loggedIn ? (
+                <Nav.Item>
+                  <Nav.Link as={NavLink} to="/howToUse" activeclassname="active">How To Use</Nav.Link>
                 </Nav.Item>
               ) : null}
 
@@ -78,6 +91,9 @@ function App() {
       <Routes>
       <Route path='/login' element={<LoginPage/>} />          
       <Route path='/signup' element={<SignupPage />} />
+      <Route path='/signup2' element={<SignupPage2 />} />
+      <Route path='/about' element={<AboutPage />} />
+      <Route path='/howToUse' element={<HowToUsePage />} />
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path='/profile' element={<ProfilePage/>} />
       <Route path='/calculator' element={<CalculatorPage/>} />

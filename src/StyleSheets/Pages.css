@@ -1,7 +1,7 @@
 .pageContainer {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 100vh;
   font-family: Arial;
   background-image: url("../Images/background.png");
@@ -33,6 +33,24 @@
   width: 100%;
 }
 
+.formActivityMobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 1);
+  border-radius: 10px;
+  padding: 40px;
+  width: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+  .formActivityMobile {
+    display: none;
+  }
+  
+}
+
 .formContainer {
   width: 100%;
 }
@@ -62,6 +80,7 @@
   color: "#333";
   text-align: "center";
 }
+
 
 /* .activity {
   display: flex;
@@ -122,3 +141,35 @@
   padding: 0;
   margin-bottom: 5px;
 }
+
+.text {
+  text-align: center;
+}
+
+.passwordText {
+  font-weight: bold;
+  font-size: small;
+}
+
+.input {
+  background-color: lightgray;
+}
+
+.passwordContainer {
+  position: relative;
+  display: flex;
+  /* justify-content: center; 
+  align-items: center;  */
+  width: 100%;
+}
+
+i {
+  position: absolute;
+  right: 10px;
+  top: 15%;
+  /* transform: translateY(-50%); */
+}
+i:hover {
+  cursor: pointer;
+}
+

@@ -1,19 +1,28 @@
 import { useState } from "react";
+import "../StyleSheets/Pages.css"
 import { Link, useNavigate } from "react-router-dom";
 import validator from 'validator';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config";
-import "../StyleSheets/Pages.css"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye , faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+const eye = <FontAwesomeIcon icon={faEye} />;
+const eyeSlash = < FontAwesomeIcon icon={faEyeSlash} />;
+
 
 export default function LoginPage() {
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
+    const [passwordShown, setPasswordShown] = useState(false);
+    const togglePasswordVisiblity = () => {
+      setPasswordShown(passwordShown ? false : true);
+    };
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const loginValidation = () => {
       if(loginEmail === "" || loginPassword === ""){
-        setError('Please fill in all fields');
+        setError('Please enter username/password');
         return;
       }
       if(!validator.isEmail(loginEmail)){
@@ -37,8 +46,10 @@ export default function LoginPage() {
         } catch (error) {
           if(error.code === "auth/user-not-found"){
             setError("No account exists")
+          } else if(error.code === "auth/wrong-password"){
+            setError("Password is incorrect")
           } else{
-            setError("Please try again")
+            setError(error.code)
           }
         }
       };
@@ -54,14 +65,18 @@ export default function LoginPage() {
                         setLoginEmail(event.target.value);
                     }}
                 />
-                <input
-                    placeholder="Password..."
-                    className='input'
-                    type="password"
-                    onChange={(event) => {
-                        setLoginPassword(event.target.value);
-                    }}
-                />
+                <div className="passwordContainer">
+                  <input
+                      placeholder="Password..."
+                      className='input'
+                      type={passwordShown ? "text" : "password"}
+                      onChange={(event) => {
+                          setLoginPassword(event.target.value);
+                      }} 
+                  />
+                  < i onClick={()=>setPasswordShown(!passwordShown)}>{passwordShown?eye:eyeSlash}</i>
+                </div>
+
 
                 <button onClick={loginValidation} className='button'> Login</button>
                 <p style={{ color: "red", marginTop: "10px" }}>{error}</p>

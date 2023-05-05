@@ -1,8 +1,8 @@
-import { collection, query, where, getDocs, Timestamp } from "firebase/firestore";
+import { collection, query, where, getDocs, Timestamp, orderBy } from "firebase/firestore";
 import { auth, db} from "../firebase-config";
 
 async function getAllActivities(userID) {
-    const q = query(collection(db, "Activities"), where("userID", "==", userID))
+    const q = query(collection(db, "Activities"), orderBy("DateTime", "desc"), where("userID", "==", userID))
     const querySnapshot = await getDocs(q);
     const activities = [];
     querySnapshot.forEach((doc) => {

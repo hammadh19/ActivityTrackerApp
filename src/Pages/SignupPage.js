@@ -2,14 +2,13 @@ import { useState } from "react";
 import validator from 'validator';
 import { Link, useNavigate } from "react-router-dom";
 import "../StyleSheets/Pages.css"
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase-config";
-import {collection, doc, setDoc} from "firebase/firestore"
+import {collection, doc, setDoc} from "firebase/firestore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye , faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+const eye = <FontAwesomeIcon icon={faEye} />;
+const eyeSlash = < FontAwesomeIcon icon={faEyeSlash} />;
 
 export default function SignupPage() {
     const [registerFirstName, setRegisterFirstName] = useState("");
@@ -17,6 +16,10 @@ export default function SignupPage() {
     const [registerEmail, setRegisterEmail] = useState("");
     const [registerPassword, setRegisterPassword] = useState("");
     const [registerConfirmPassword, setRegisterConfirmPassword] = useState("");
+    const [passwordShown, setPasswordShown] = useState(false);
+    const togglePasswordVisiblity = () => {
+      setPasswordShown(passwordShown ? false : true);
+    };
     const [error, setError] = useState("");
     const usersCollectionRef = collection(db, 'Users');
     const navigate = useNavigate();
@@ -59,7 +62,7 @@ export default function SignupPage() {
             email: registerEmail,
             userID: user.user.uid,
           }); 
-          navigate("/profile");
+          navigate("/signup2");
         } catch (error) {
           if (error.code === "auth/email-already-in-use") {
             setError("Email is already in use");
@@ -95,24 +98,32 @@ export default function SignupPage() {
                 setRegisterEmail(event.target.value);
               }}
             />
-            <input
-              placeholder="Password..."
-              className='input'
-              type="password"
-              onChange={(event) => {
-                setRegisterPassword(event.target.value);
-              }}
-            />
-            <input
-              placeholder="Confirm Password..."
-              className='input'
-              type="password"
-              onChange={(event) => {
-                setRegisterConfirmPassword(event.target.value);
-              }}
-            />
+            <p className="passwordText">Minimum 8 characters including number, letters and special character</p>
+            <div className="passwordContainer">
+              <input
+                placeholder="Password..."
+                className='input'
+                type={passwordShown ? "text" : "password"}
+                onChange={(event) => {
+                  setRegisterPassword(event.target.value);
+                }}
+              />
+              < i onClick={()=>setPasswordShown(!passwordShown)}>{passwordShown?eye:eyeSlash}</i>
+            </div>
+            <div className="passwordContainer">
+              <input
+                placeholder="Confirm Password..."
+                className='input'
+                type={passwordShown ? "text" : "password"}
+                onChange={(event) => {
+                  setRegisterConfirmPassword(event.target.value);
+                }}
+              />
+              {/* < i onClick={()=>setPasswordShown(!passwordShown)}>{passwordShown?eye:eyeSlash}</i> */}
+            </div>
+            
             <button className='button' onClick={registerValidation}>
-              Sign up
+              Next
             </button>
             <p style={{ color: "red", marginTop: "10px" }}>{error}</p>
             <p> 

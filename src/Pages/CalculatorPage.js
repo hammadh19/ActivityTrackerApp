@@ -8,6 +8,7 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
 import Calculator from '../Components/Calculator';
 import addActivity from '../FirebaseCalls/SetActivity';
+import convertTime from '../Formulas/ConvertTime';
 
 export default function CalculatorPage() {
     const [activity, setActivity] = useState("");
@@ -44,15 +45,11 @@ export default function CalculatorPage() {
             console.log(activity);
             console.log(time,timeUnit);
             console.log(distance, distanceUnit);
-            if(timeUnit === "hours"){
-                let mins = time * 60;
-                setTime(mins);
-                console.log(mins)
-                setResult(await Calculator(activity, mins));
-            } else{
-                setResult(await Calculator(activity, time));
-            }
-            setShowResult(true); // set state variable to show result
+            let hours = convertTime(convertTime(time, timeUnit))
+            setResult(await Calculator(activity, hours));
+            
+            console.log(hours)
+            setShowResult(true);
         }
     }
 
@@ -62,7 +59,7 @@ export default function CalculatorPage() {
         }else{
             setDateTimeError("");
             console.log(time)
-            addActivity(activity, result, value, time, distance, distanceUnit)
+            addActivity(activity, result, value, time, timeUnit, distance, distanceUnit)
             setSuccessMessage("Successfully added activity")
         }
     }
@@ -71,7 +68,9 @@ export default function CalculatorPage() {
     return(
         <div className="pageContainer">
             <div className='form'>
-                <h3 style={{ marginBottom: "20px", color: "#333", textAlign: "center" }}> Activity and calories burned calculator </h3>
+                <h3 style={{ marginBottom: "20px", color: "#333", textAlign: "center"}}> 
+                    Activity and Calories Burned Calculator 
+                </h3>
 
                 <select
                 value={activity}
@@ -81,10 +80,18 @@ export default function CalculatorPage() {
                 className='input'
                 >
                 <option value="">Select Activity</option>
-                <option value="Running">Running</option>
-                <option value="Swimming">Swimming</option>
-                <option value="Cycling">Cycling</option>
+                <option value="Walking(slow)">Walking(slow)</option>
+                <option value="Walking(fast)">Walking(fast)</option>
+                <option value="Running(slow)">Running(slow)</option>
+                <option value="Running(fast)">Running(fast)</option>
+                <option value="Swimming(slow)">Swimming(slow)</option>
+                <option value="Swimming(fast)">Swimming(fast)</option>
+                <option value="Cycling(slow)">Cycling(slow)</option>
+                <option value="Cycling(fast)">Cycling(fast)</option>
+                <option value="Rowing(slow)">Rowing(slow)</option>
+                <option value="Rowing(fast)">Rowing(fast)</option>
                 <option value="Jogging">Jogging</option>
+                <option value="Weight Training">Weight Training</option>
                 
                 </select>
 
@@ -113,7 +120,7 @@ export default function CalculatorPage() {
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                     <input
                     placeholder="Enter distance"
-                    className='input'
+                    className="input"
                     onChange={(event) => {
                     setDistance(event.target.value);
                     }}
@@ -130,6 +137,7 @@ export default function CalculatorPage() {
                     <option value="Metres">Metres</option>
                     <option value="Kilometres">Kilometres</option>
                     <option value="Miles">Miles</option>
+                    <option value="Laps">Laps</option>
                     </select>
                 </div>
                 <p style={{ color: "red" }}>{error}</p>
