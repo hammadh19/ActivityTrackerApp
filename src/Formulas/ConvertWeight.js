@@ -5,7 +5,7 @@ export default function convertWeight(weight, units){
     } if(units === "stones"){
         const newWeight = weight * 6.35;
         return newWeight;
-    }else {
+    } else {
         return weight;
     }
 

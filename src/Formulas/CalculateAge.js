@@ -11,7 +11,7 @@ export default async function CalculateAge() {
         const ageDiffMs = Date.now() - birthdate.getTime(); // calculate difference in milliseconds
         const ageDate = new Date(ageDiffMs); // convert age difference to a Date object
         const age = Math.abs(ageDate.getUTCFullYear() - 1970); // extract the year and calculate the age        
-        console.log(age)
+        console.log(age);
         return age;
       } else {
         console.log("No such document!");

@@ -17,16 +17,16 @@ export default function SignupPage() {
     const [registerPassword, setRegisterPassword] = useState("");
     const [registerConfirmPassword, setRegisterConfirmPassword] = useState("");
     const [passwordShown, setPasswordShown] = useState(false);
-    const togglePasswordVisiblity = () => {
-      setPasswordShown(passwordShown ? false : true);
-    };
     const [error, setError] = useState("");
-    const usersCollectionRef = collection(db, 'Users');
+    const usersCollectionRef = collection(db, "Users");
     const navigate = useNavigate();
 
     const registerValidation = () => {
       if(registerEmail === "" || registerPassword === "" || registerConfirmPassword === "" || registerFirstName === "" || registerLastName === ""){
         setError('Please fill in all fields');
+        return;
+      } if(!isNaN(registerFirstName) || !isNaN(registerLastName)){
+        setError("Please enter valid first/last name");
         return;
       }
       if(!validator.isEmail(registerEmail)){
@@ -38,7 +38,7 @@ export default function SignupPage() {
           return;
       }
       if(registerPassword !== registerConfirmPassword){
-        setError("Passwords didn't match. Try again")
+        setError("Passwords didn't match. Try again");
         return;
       }
       else{
@@ -66,7 +66,7 @@ export default function SignupPage() {
         } catch (error) {
           if (error.code === "auth/email-already-in-use") {
             setError("Email is already in use");
-          }else {
+          } else {
             setError("An error occurred while registering. Please try again later.");
           }
           console.log(error.message);
@@ -74,35 +74,35 @@ export default function SignupPage() {
       };
 
       return (
-        <div className='pageContainer'>
-          <div className='form'>
+        <div className="pageContainer">
+          <div className="form">
             <h3 style={{ marginBottom: "20px", color: "#333" }}>Create an account</h3>
             <input
               placeholder="First Name..."
-              className='input'
+              className="input"
               onChange={(event) => {
                 setRegisterFirstName(event.target.value);
               }}
             />
             <input
               placeholder="Last Name..."
-              className='input'
+              className="input"
               onChange={(event) => {
                 setRegisterLastName(event.target.value);
               }}
             />
             <input
               placeholder="Email..."
-              className='input'
+              className="input"
               onChange={(event) => {
                 setRegisterEmail(event.target.value);
               }}
             />
-            <p className="passwordText">Minimum 8 characters including number, letters and special character</p>
+            <p className="passwordText">Minimum 8 characters including number, upper/lower case letters and special character</p>
             <div className="passwordContainer">
               <input
                 placeholder="Password..."
-                className='input'
+                className="input"
                 type={passwordShown ? "text" : "password"}
                 onChange={(event) => {
                   setRegisterPassword(event.target.value);
@@ -113,13 +113,12 @@ export default function SignupPage() {
             <div className="passwordContainer">
               <input
                 placeholder="Confirm Password..."
-                className='input'
+                className="input"
                 type={passwordShown ? "text" : "password"}
                 onChange={(event) => {
                   setRegisterConfirmPassword(event.target.value);
                 }}
               />
-              {/* < i onClick={()=>setPasswordShown(!passwordShown)}>{passwordShown?eye:eyeSlash}</i> */}
             </div>
             
             <button className='button' onClick={registerValidation}>
@@ -127,9 +126,9 @@ export default function SignupPage() {
             </button>
             <p style={{ color: "red", marginTop: "10px" }}>{error}</p>
             <p> 
-                    Already have an account?{" "}
-                    <Link to={"/login"}>Log in</Link>
-                </p>
+              Already have an account?{" "}
+              <Link to={"/login"}>Log in</Link>
+             </p>
           </div>
         </div>
       );

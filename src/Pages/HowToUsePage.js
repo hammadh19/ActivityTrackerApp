@@ -1,13 +1,12 @@
-import "../StyleSheets/Pages.css"
-import running_icon from '../Images/running_icon.png'
-import swimming_icon from '../Images/swimming_icon.png'
-import jogging_icon from '../Images/jogging_icon.png'
+import "../StyleSheets/Pages.css";
+import swimming_icon from "../Images/swimming_icon.png";
+import jogging_icon from "../Images/jogging_icon.png";
 
 export default function HowToUsePage() {
     
     return(
-        <div className='pageContainer'>
-            <div className='form'>
+        <div className="pageContainer">
+            <div className="form">
                 <h3 className="formTitle"> How To Use </h3>
                 <p className="text">
                     The Profile tab allows you to change your personal details and will calculate you BMR (Basal Metabolic Rate) based on your height, weight, age and gender.

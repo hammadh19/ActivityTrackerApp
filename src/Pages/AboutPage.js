@@ -1,13 +1,13 @@
-import "../StyleSheets/Pages.css"
-import running_icon from '../Images/running_icon.png'
-import swimming_icon from '../Images/swimming_icon.png'
-import jogging_icon from '../Images/jogging_icon.png'
+import "../StyleSheets/Pages.css";
+import running_icon from "../Images/running_icon.png";
+import swimming_icon from "../Images/swimming_icon.png";
+import jogging_icon from "../Images/jogging_icon.png";
 
 export default function AboutPage() {
     
     return(
-        <div className='pageContainer'>
-            <div className='form'>
+        <div className="pageContainer">
+            <div className="form">
                 <h3 style={{ marginBottom: "20px", color: "#333" }}> About Us </h3>
                 <p className="text">
                     FitnessPal is an online fitness tracking tool that can be used to calculate the amount of calories burned during an exercise.

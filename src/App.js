@@ -1,21 +1,21 @@
-import './App.css';
-import LoginPage from './Pages/LoginPage';
-import SignupPage from './Pages/SignupPage';
-import SignupPage2 from './Pages/SignupPage2';
-import AboutPage from './Pages/AboutPage';
-import HowToUsePage from './Pages/HowToUsePage';
-import ProfilePage from './Pages/ProfilePage';
-import CalculatorPage from './Pages/CalculatorPage';
-import ActivitiesPage from './Pages/ActivitiesPage';
+import "./App.css";
+import LoginPage from "./Pages/LoginPage";
+import SignupPage from "./Pages/SignupPage";
+import SignupPage2 from "./Pages/SignupPage2";
+import AboutPage from "./Pages/AboutPage";
+import HowToUsePage from "./Pages/HowToUsePage";
+import ProfilePage from "./Pages/ProfilePage";
+import CalculatorPage from "./Pages/CalculatorPage";
+import ActivitiesPage from "./Pages/ActivitiesPage";
 import { BrowserRouter, Route, Routes, NavLink } from "react-router-dom";
-import { Navigate } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { useState, useEffect } from 'react';
-import SignOutButton from './Components/SignOutButton';
+import { Navigate } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useState, useEffect } from "react";
+import SignOutButton from "./Components/SignOutButton";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -35,8 +35,7 @@ function App() {
 
   return (
     <BrowserRouter>
-
-      <Navbar className='color-nav' expand="lg" >
+      <Navbar className="color-nav" expand="lg" >
         <Container>
           <Navbar.Brand>FitnessPal</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -77,7 +76,6 @@ function App() {
                   <Nav.Link as={NavLink} to="/howToUse" activeclassname="active">How To Use</Nav.Link>
                 </Nav.Item>
               ) : null}
-
               {loggedIn ? (
                 <Nav.Item>
                   <SignOutButton />
@@ -89,15 +87,15 @@ function App() {
       </Navbar>
 
       <Routes>
-      <Route path='/login' element={<LoginPage/>} />          
-      <Route path='/signup' element={<SignupPage />} />
-      <Route path='/signup2' element={<SignupPage2 />} />
-      <Route path='/about' element={<AboutPage />} />
-      <Route path='/howToUse' element={<HowToUsePage />} />
+      <Route path="/login" element={<LoginPage/>} />          
+      <Route path="/signup" element={<SignupPage />} />
+      <Route path="/signup2" element={<SignupPage2 />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/howToUse" element={<HowToUsePage />} />
       <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path='/profile' element={<ProfilePage/>} />
-      <Route path='/calculator' element={<CalculatorPage/>} />
-      <Route path='/activities' element={<ActivitiesPage/>} />
+      <Route path="/profile" element={<ProfilePage/>} />
+      <Route path="/calculator" element={<CalculatorPage/>} />
+      <Route path="/activities" element={<ActivitiesPage/>} />
       </Routes>
       
     </BrowserRouter>

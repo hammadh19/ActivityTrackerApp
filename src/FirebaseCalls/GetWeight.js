@@ -13,4 +13,4 @@ async function getWeight(userID) {
     }
   }
 
-  export { getWeight }
+export { getWeight }

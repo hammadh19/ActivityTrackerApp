@@ -48,7 +48,6 @@
   .formActivityMobile {
     display: none;
   }
-  
 }
 
 .formContainer {
@@ -80,36 +79,6 @@
   color: "#333";
   text-align: "center";
 }
-
-
-/* .activity {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  width: 100%;
-  background-color: #92d4d2;
-  border-radius: 5px;
-}
-
-.activity-image {
-  margin-right: 20px;
-}
-
-.activity-image img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-.activity-details {
-  flex: 1;
-} */
-
-/* .formActivity {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-} */
 
 .activity {
   display: flex;
@@ -152,14 +121,14 @@
 }
 
 .input {
-  background-color: lightgray;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
 }
 
 .passwordContainer {
   position: relative;
   display: flex;
-  /* justify-content: center; 
-  align-items: center;  */
   width: 100%;
 }
 
@@ -167,9 +136,9 @@ i {
   position: absolute;
   right: 10px;
   top: 15%;
-  /* transform: translateY(-50%); */
 }
 i:hover {
   cursor: pointer;
 }
+
 

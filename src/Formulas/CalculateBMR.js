@@ -21,7 +21,7 @@ export default async function CalculateBMR() {
 
       if(gender === "male"){
         var result = (10 * newWeight) + (6.25 * newHeight) - (5 * age) + 5;
-      } else {
+      } else if(gender === "female") {
         var result = (10 * newWeight) + (6.25 * newHeight) - (5 * age) - 161;
       }
       console.log(Math.round(result));

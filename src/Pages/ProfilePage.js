@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import CalculateBMR from "../Formulas/CalculateBMR";
 
 export default function ProfilePage() {
-    const [userID, setUserID] = useState("")
+    const [userID, setUserID] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [weight, setWeight] = useState("");
@@ -32,10 +32,8 @@ export default function ProfilePage() {
         });
       }, []);
 
-    
-
     async function getData() {
-        const docRef = doc(db, "Users", userID);            
+        const docRef = doc(db, "Users", userID);   
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setBMR(await CalculateBMR());
@@ -46,17 +44,17 @@ export default function ProfilePage() {
           setHeight(docSnap.data().height);
           setHeightUnit(docSnap.data().heightUnit);
         } else {
-          console.log("No such document!");
+          console.log("No such document");
         }
     }
 
     const validation = () => {
-        if(firstName === "" || lastName === ""){
+        if(firstName === "" || lastName === "" || !isNaN(firstName) || !isNaN(lastName)){
             setError("Please enter first/last name");
             setSuccessMessage("");
             return;
         } if(weight === "" || height === ""){
-            setError("Please enter weight/height")
+            setError("Please enter weight/height");
             setSuccessMessage("");
             return;
         } if(isNaN(weight) || isNaN(height)){
@@ -68,7 +66,7 @@ export default function ProfilePage() {
             setSuccessMessage("");
             return;
         } else {
-            setError("")
+            setError("");
             updateDetails();
         }
     }
@@ -83,25 +81,25 @@ export default function ProfilePage() {
             height: height,
             heightUnit: heightUnit
             });
-        getData()
-        console.log("User details updated")
-        setError("")
-        setSuccessMessage("Details successfully updated")
+        getData();
+        console.log("User details updated");
+        setError("");
+        setSuccessMessage("Details successfully updated");
         }
         res()
     }
 
     return(
-        <div className='pageContainer'>
-            <div className='form'>
-                <h3 className='formTitle'> Profile </h3>
+        <div className="pageContainer">
+            <div className="form">
+                <h3 className="formTitle"> Profile </h3>
                 
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                <p style={{ marginRight: "10px" }}>First name</p>
+                <p style={{ marginRight: "10px" }}>First Name</p>
                 <input
                     placeholder="Enter First Name..."
                     defaultValue={firstName}
-                    className='input'
+                    className="input"
                     onChange={(event) => {
                         setFirstName(event.target.value);
                     }}
@@ -109,11 +107,11 @@ export default function ProfilePage() {
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                <p style={{ marginRight: "10px" }}>Last name</p>
+                <p style={{ marginRight: "10px" }}>Last Name</p>
                 <input
                     placeholder="Enter Last Name..."
                     defaultValue={lastName}
-                    className='input'
+                    className="input"
                     onChange={(event) => {
                         setLastName(event.target.value);
                     }}
@@ -125,7 +123,7 @@ export default function ProfilePage() {
                 <input
                     placeholder="Enter Weight..."
                     value={weight}
-                    className='input'
+                    className="input"
                     onChange={(event) => {
                         setWeight(event.target.value);
                     }}
@@ -135,7 +133,7 @@ export default function ProfilePage() {
                     onChange={(event) => {
                     setWeightUnit(event.target.value);
                     }}
-                    className='input'
+                    className="input"
                     >
                     <option value="">Select Unit</option>
                     <option value="kg">Kilograms(kg)</option>
@@ -149,7 +147,7 @@ export default function ProfilePage() {
                 <input
                     placeholder="Enter Height..."
                     value={height}
-                    className='input'
+                    className="input"
                     onChange={(event) => {
                         setHeight(event.target.value);
                     }}
@@ -159,7 +157,7 @@ export default function ProfilePage() {
                     onChange={(event) => {
                     setHeightUnit(event.target.value);
                     }}
-                    className='input'
+                    className="input"
                     >
                     <option value="">Select Unit</option>
                     <option value="cm">Centimetres(cm)</option>

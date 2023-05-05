@@ -1,14 +1,13 @@
-import * as React from 'react';
+import * as React from "react";
 import "../StyleSheets/Pages.css"
-import { useState, useEffect } from "react";
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
-import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
-import Calculator from '../Components/Calculator';
-import addActivity from '../FirebaseCalls/SetActivity';
-import convertTime from '../Formulas/ConvertTime';
+import { useState } from "react";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DesktopDateTimePicker } from "@mui/x-date-pickers/DesktopDateTimePicker";
+import CalorieCalculator from "../Formulas/CalorieCalculator";
+import addActivity from "../FirebaseCalls/SetActivity";
+import convertTime from "../Formulas/ConvertTime";
 
 export default function CalculatorPage() {
     const [activity, setActivity] = useState("");
@@ -16,9 +15,9 @@ export default function CalculatorPage() {
     const [time, setTime] = useState(0);
     const [distanceUnit, setDistanceUnit] = useState("");
     const [distance, setDistance] = useState("");
-    const [result, setResult] = useState(0)
-    const [showResult, setShowResult] = useState(false); // state variable to show/hide result
-    const [value, setValue] = useState("")
+    const [result, setResult] = useState(0);
+    const [showResult, setShowResult] = useState(false);
+    const [value, setValue] = useState("");
     const [error, setError] = useState("");
     const [dateTimeError, setDateTimeError] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
@@ -45,9 +44,8 @@ export default function CalculatorPage() {
             console.log(activity);
             console.log(time,timeUnit);
             console.log(distance, distanceUnit);
-            let hours = convertTime(convertTime(time, timeUnit))
-            setResult(await Calculator(activity, hours));
-            
+            let hours = convertTime(convertTime(time, timeUnit));
+            setResult(await CalorieCalculator(activity, hours));
             console.log(hours)
             setShowResult(true);
         }
@@ -55,19 +53,19 @@ export default function CalculatorPage() {
 
     const displayDateTime = () => {
         if(value === ""){
-            setDateTimeError("Please enter a date and time")
+            setDateTimeError("Please enter a date and time");
         }else{
             setDateTimeError("");
-            console.log(time)
-            addActivity(activity, result, value, time, timeUnit, distance, distanceUnit)
-            setSuccessMessage("Successfully added activity")
+            console.log(time);
+            addActivity(activity, result, value, time, timeUnit, distance, distanceUnit);
+            setSuccessMessage("Successfully added activity");
         }
     }
     
 
     return(
         <div className="pageContainer">
-            <div className='form'>
+            <div className="form">
                 <h3 style={{ marginBottom: "20px", color: "#333", textAlign: "center"}}> 
                     Activity and Calories Burned Calculator 
                 </h3>
@@ -77,7 +75,7 @@ export default function CalculatorPage() {
                 onChange={(event) => {
                 setActivity(event.target.value);
                 }}
-                className='input'
+                className="input"
                 >
                 <option value="">Select Activity</option>
                 <option value="Walking(slow)">Walking(slow)</option>
@@ -97,8 +95,8 @@ export default function CalculatorPage() {
 
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                     <input
-                    placeholder="Enter time taken"
-                    className='input'
+                    placeholder="Enter Time Taken"
+                    className="input"
                     onChange={(event) => {
                     setTime(event.target.value);
                     }}
@@ -109,7 +107,7 @@ export default function CalculatorPage() {
                     onChange={(event) => {
                     setTimeUnit(event.target.value);
                     }}
-                    className='input'
+                    className="input"
                     >
                     <option value="">Select Unit</option>
                     <option value="hours">Hours</option>
@@ -119,7 +117,7 @@ export default function CalculatorPage() {
 
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                     <input
-                    placeholder="Enter distance"
+                    placeholder="Enter Distance"
                     className="input"
                     onChange={(event) => {
                     setDistance(event.target.value);
@@ -131,7 +129,7 @@ export default function CalculatorPage() {
                     onChange={(event) => {
                     setDistanceUnit(event.target.value);
                     }}
-                    className='input'
+                    className="input"
                     >
                     <option value="">Select Unit</option>
                     <option value="Metres">Metres</option>
@@ -142,24 +140,24 @@ export default function CalculatorPage() {
                 </div>
                 <p style={{ color: "red" }}>{error}</p>
 
-                <button onClick={validation} className='button'> Calculate </button>
+                <button onClick={validation} className="button"> Calculate </button>
 
                 {showResult ? (
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <h5 style={{ color: "black", marginTop: "20px" }}>Calories burned: {result} kcal</h5>
-                    <DemoContainer components={['DesktopDateTimePicker']}>
+                    <DemoContainer components={["DesktopDateTimePicker"]}>
                     <DesktopDateTimePicker label="Enter Date and Time" value={value} onChange={(newValue) => setValue(newValue)} />
                     </DemoContainer>
-                    <p style={{ color: "red",  }}>{dateTimeError}</p>
+                    <p style={{ color: "red" }}>{dateTimeError}</p>
                     </LocalizationProvider>
                 ) : null}
 
                 {showResult ? (
-                        <button onClick={displayDateTime} className='button'> Add to Activity Log </button>
+                        <button onClick={displayDateTime} className="button"> Add to Activity Log </button>
                     ) : null}
 
                 {showResult ? (
-                    <p style={{ color: "green" }}>{successMessage}</p>
+                    <p style={{ color: "green", paddingTop: "10px" }}>{successMessage}</p>
                     ) : null}
             </div>
         </div>

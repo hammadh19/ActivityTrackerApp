@@ -1,19 +1,15 @@
 import { collection, query, where, getDocs, Timestamp } from "firebase/firestore";
-import { auth, db} from "../firebase-config";
+import { db} from "../firebase-config";
 
 async function getCaloriesThisWeek(userID) {
     const currentDate = new Date();
-    const currentDay = currentDate.getDay(); // Sunday = 0, Monday = 1, etc.
+    const currentDay = currentDate.getDay(); 
 
     const startOfWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - (currentDay === 0 ? 6 : currentDay - 1));
     const endOfWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), startOfWeek.getDate() + 7);
-    //console.log(startOfWeek)
-    //console.log(endOfWeek)
 
     const startOfWeekTimestamp = Timestamp.fromDate(startOfWeek);
     const endOfWeekTimestamp = Timestamp.fromDate(endOfWeek);
-    //console.log(startOfWeekTimestamp)
-    //console.log(endOfWeekTimestamp)
 
     const q = query(
         collection(db, "Activities"), 
@@ -24,10 +20,8 @@ async function getCaloriesThisWeek(userID) {
     const querySnapshot = await getDocs(q);
     const weeklyData = [];
     querySnapshot.forEach((doc) => {
-        //console.log(doc.id, " => ", doc.data());
-        
         const { Day, CaloriesBurnt } = doc.data();
-        weeklyData.push({ Day, CaloriesBurnt })
+        weeklyData.push({ Day, CaloriesBurnt });
     });
     return weeklyData;
 }

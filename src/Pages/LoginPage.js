@@ -1,7 +1,7 @@
 import { useState } from "react";
-import "../StyleSheets/Pages.css"
+import "../StyleSheets/Pages.css";
 import { Link, useNavigate } from "react-router-dom";
-import validator from 'validator';
+import validator from "validator";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,22 +14,17 @@ export default function LoginPage() {
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
     const [passwordShown, setPasswordShown] = useState(false);
-    const togglePasswordVisiblity = () => {
-      setPasswordShown(passwordShown ? false : true);
-    };
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const loginValidation = () => {
       if(loginEmail === "" || loginPassword === ""){
-        setError('Please enter username/password');
+        setError("Please enter username/password");
         return;
-      }
-      if(!validator.isEmail(loginEmail)){
+      } if(!validator.isEmail(loginEmail)){
         setError("Email is Not Correct");
         return;
-      }
-      else{
+      } else{
         login();
       }
     }
@@ -55,12 +50,12 @@ export default function LoginPage() {
       };
 
     return(
-        <div className='pageContainer'>
-            <div className='form'>
+        <div className="pageContainer">
+            <div className="form">
                 <h3 style={{ marginBottom: "20px", color: "#333" }}> Login </h3>
                 <input
                     placeholder="Email..."
-                    className='input'
+                    className="input"
                     onChange={(event) => {
                         setLoginEmail(event.target.value);
                     }}
@@ -68,7 +63,7 @@ export default function LoginPage() {
                 <div className="passwordContainer">
                   <input
                       placeholder="Password..."
-                      className='input'
+                      className="input"
                       type={passwordShown ? "text" : "password"}
                       onChange={(event) => {
                           setLoginPassword(event.target.value);
@@ -86,6 +81,5 @@ export default function LoginPage() {
                 </p>
             </div>
         </div>
-
     )
 }

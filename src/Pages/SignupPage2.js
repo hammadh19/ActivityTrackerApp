@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../StyleSheets/Pages.css"
+import "../StyleSheets/Pages.css";
 import { auth, db } from "../firebase-config";
-import {collection, doc, setDoc, updateDoc, Timestamp} from "firebase/firestore"
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import {collection, doc, updateDoc, Timestamp} from "firebase/firestore";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers";
 
 export default function SignupPage2() {
@@ -16,21 +16,24 @@ export default function SignupPage2() {
     const [gender, setGender] = useState("");
     const [error, setError] = useState("");
     const [DOB, setDOB] = useState("");
-    const usersCollectionRef = collection(db, 'Users');
+    const usersCollectionRef = collection(db, "Users");
     const navigate = useNavigate();
 
     const validation = () => {
         if(weight === "" || weightUnit === ""){
           setError("Please enter weight/select units");
           return;
+        } if(isNaN(weight) || isNaN(height)){
+            setError("Please enter valid height/weight");
+            return;
         } if(height === "" || heightUnit === ""){
             setError("Please enter height/select units");
             return;
-        } if(DOB === ""){
+        }  if(DOB === ""){
           setError("Please enter Date of Birth");
           return;
         } if(gender === ""){
-          setError("Please select gender")
+          setError("Please select gender");
           return;
         }
         console.log("Done...")
@@ -52,7 +55,7 @@ export default function SignupPage2() {
         } catch (error) {
           if (error.code === "auth/email-already-in-use") {
             setError("Email is already in use");
-          }else {
+          } else {
             setError("An error occurred while registering. Please try again later.");
           }
           console.log(error.message);
@@ -60,15 +63,15 @@ export default function SignupPage2() {
       };
 
       return (
-        <div className='pageContainer'>
-          <div className='form'>
+        <div className="pageContainer">
+          <div className="form">
             <h3 style={{ marginBottom: "20px", color: "#333", textAlign: "center" }}>Enter Personal Information</h3>
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                 <p style={{ marginRight: "10px" }}>Weight</p>
                 <input
                     placeholder="Enter Weight..."
                     value={weight}
-                    className='input'
+                    className="input"
                     onChange={(event) => {
                         setWeight(event.target.value);
                     }}
@@ -78,7 +81,7 @@ export default function SignupPage2() {
                     onChange={(event) => {
                     setWeightUnit(event.target.value);
                     }}
-                    className='input'
+                    className="input"
                     >
                     <option value="">Select Unit</option>
                     <option value="kg">Kilograms(kg)</option>
@@ -92,7 +95,7 @@ export default function SignupPage2() {
                 <input
                     placeholder="Enter Height..."
                     value={height}
-                    className='input'
+                    className="input"
                     onChange={(event) => {
                         setHeight(event.target.value);
                     }}
@@ -102,7 +105,7 @@ export default function SignupPage2() {
                     onChange={(event) => {
                     setHeightUnit(event.target.value);
                     }}
-                    className='input'
+                    className="input"
                     >
                     <option value="">Select Unit</option>
                     <option value="cm">Centimetres(cm)</option>
@@ -113,7 +116,7 @@ export default function SignupPage2() {
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center"}}>
                 <p style={{ marginRight: "10px" }}>Date of Birth</p>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['DatePicker']}>
+                <DemoContainer components={["DatePicker"]}>
                 <DatePicker label="Enter DOB" value={DOB} onChange={(newValue) => setDOB(newValue)} />
                 </DemoContainer>
                 </LocalizationProvider>
@@ -126,15 +129,15 @@ export default function SignupPage2() {
                     onChange={(event) => {
                     setGender(event.target.value);
                     }}
-                    className='input'
+                    className="input"
                     >
                     <option value="">Select Gender</option>
                     <option value="male">Male</option>
-                    <option value="femle">Female</option>
+                    <option value="female">Female</option>
                 </select>
                 </div>
 
-            <button className='button' onClick={validation}>
+            <button className="button" onClick={validation}>
               Sign up
             </button>
             <p style={{ color: "red", marginTop: "10px" }}>{error}</p>
